@@ -2,9 +2,9 @@ import { useState, useRef } from "react";
 import "./App.css";
 import { DocumentTextIcon } from "@heroicons/react/24/solid";
 
-const albumBucketName = "my-bucket-testing-20232";
+const albumBucketName = "my-bucket-testing-20233";
 const bucketRegion = "us-east-2";
-const IdentityPoolId = "us-east-2:f442e50d-b0d9-4494-b8f4-0c00269811c9";
+const IdentityPoolId = "us-east-2:a8148ee2-4e28-4093-939d-2e82a5cd8cb8";
 window.AWS.config.update({
   region: bucketRegion,
   credentials: new window.AWS.CognitoIdentityCredentials({
@@ -20,15 +20,14 @@ const s3 = new window.AWS.S3({
 function App() {
   const fileRef = useRef<Document>();
   
-  const addPhoto = (albumName: string) => {
-    debugger;
+  const addPhoto = () => {
     const files = fileRef.current && fileRef.current.files;
     if (!files.length) {
       return alert("Please choose a file to upload first.");
     }
     const file = files[0];
     const fileName = file.name;
-    const albumPhotosKey = encodeURIComponent(albumName) + "/";
+    const albumPhotosKey = 'react-testing/';
 
     const photoKey = albumPhotosKey + fileName;
 
@@ -45,6 +44,8 @@ function App() {
 
     promise.then(
       function (data) {
+        debugger;
+        console.log('upload success data = ', data);
         alert("Successfully uploaded photo.");
         // viewAlbum(albumName);
       },
